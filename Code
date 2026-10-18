@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Bank {
+private:
+    string name;
+    int balance;
+    static int count;
+
+public:
+    Bank(string name, int balance) {
+        this->name = name;
+        this->balance = balance;
+        count++;
+    }
+
+    inline void display() {
+        cout << "Name: " << name << endl;
+        cout << "Balance: Rs. " << balance << endl;
+    }
+
+    static void showCount() {
+        cout << "Total Accounts: " << count << endl;
+    }
+
+    friend class Manager;
+};
+
+int Bank::count = 0;
+
+class Manager {
+public:
+    void showBalance(Bank b) {
+        cout << "Manager Access: Rs. " << b.balance << endl;
+    }
+};
+
+int main() {
+    Bank b1("Rahul", 5000);
+    Bank b2("Amit", 8000);
+
+    cout << "--- Bank Account Details ---" << endl;
+
+    b1.display();
+    cout << endl;
+
+    b2.display();
+    cout << endl;
+
+    Bank::showCount();
+
+    Manager m;
+    m.showBalance(b1);
+
+    return 0;
+}
